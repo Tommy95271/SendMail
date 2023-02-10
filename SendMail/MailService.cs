@@ -28,6 +28,7 @@ namespace SendMail
         public async Task<bool> SendMailAsync(MailRequestDto mailData)
         {
             var xml = CreateSoapEnvelope(mailData);
+            _logger.LogInformation($"Send mail hunter: {xml}");
 
             var content = new StringContent(xml, Encoding.UTF8, "text/xml");
             var emailIp = await _cfgMailService.GetSysConfigEmailIpAsync();
