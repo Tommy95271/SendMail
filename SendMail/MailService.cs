@@ -29,7 +29,6 @@ namespace SendMail
         {
             var xml = CreateSoapEnvelope(mailData);
             _logger.LogInformation($"Send mail hunter: {xml}");
-
             var content = new StringContent(xml, Encoding.UTF8, "text/xml");
             var emailIp = await _cfgMailService.GetSysConfigEmailIpAsync();
             var url = Path.Combine(emailIp, "Mailhunter_app/SendNow.asmx?op=SendNowAPI");
@@ -40,14 +39,7 @@ namespace SendMail
             }
             else
             {
-                if (result.Body.MailResponse.SendNowAPIResult)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return result.Body.MailResponse.SendNowAPIResult;
             }
         }
 
